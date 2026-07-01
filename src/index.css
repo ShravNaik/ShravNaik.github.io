@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'SK Modernist';
+  src: url('/fonts/Sk-Modernist-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SK Modernist';
+  src: url('/fonts/Sk-Modernist-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SK Modernist Mono';
+  src: url('/fonts/Sk-Modernist-Mono.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@theme {
+  --font-sans: "SK Modernist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SK Modernist Mono", ui-monospace, monospace;
+}
+
+body {
+  @apply bg-[#0b1121] text-white;
+}
+
+.hide-scrollbar, .hide-scrollbar-all, .hide-scrollbar-all * {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar, .hide-scrollbar-all::-webkit-scrollbar, .hide-scrollbar-all *::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari and Opera */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Glass card: opaque enough to look solid without blur, frosted when blur works */
+.glass-card {
+  background-color: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.glass-card-details {
+  background-color: rgba(8, 8, 8, 0.95);
+}
+.glass-card-light {
+  background-color: rgba(241, 245, 249, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.glass-card-details-light {
+  background-color: rgba(248, 250, 252, 0.95);
+}
