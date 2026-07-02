@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
-import { Moon, Sun, ArrowUp, Volume2, VolumeX } from 'lucide-react';
+import { Moon, Sun, ArrowUp } from 'lucide-react';
 import MagneticButton from './components/MagneticButton';
 import VisitorCounter from './components/VisitorCounter';
 import { motion, useScroll, useMotionValueEvent, type Variants } from 'framer-motion';
@@ -9,7 +9,6 @@ import ProjectDetails from './pages/ProjectDetails';
 import BlogDetails from './pages/BlogDetails';
 import ParticleTrail from './components/ParticleTrail';
 import EasterEgg from './components/EasterEgg';
-import { SoundProvider, useSound } from './context/SoundContext';
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
@@ -28,7 +27,6 @@ const staggerContainer: Variants = {
 };
 
 function MainApp() {
-  const { isSoundEnabled, toggleSound, playPop } = useSound();
   const [isDark, setIsDark] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -71,14 +69,14 @@ function MainApp() {
     <>
       <div
         onMouseMove={handleMouseMove}
-        className={`min-h-screen relative overflow-hidden font-sans transition-colors duration-300 ${isDark ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'}`}
+        className={`min-h-screen relative overflow-hidden font-sans transition-colors duration-300 ${isDark ? 'bg-black text-white' : 'bg-[#F5F5F5] text-slate-900'}`}
       >
         <ParticleTrail isDark={isDark} />
         <EasterEgg />
 
         {/* Background Grid */}
-        <div className={`fixed inset-0 bg-[size:40px_40px] ${isDark ? 'bg-[linear-gradient(to_right,#201F20_1px,transparent_1px),linear-gradient(to_bottom,#201F20_1px,transparent_1px)]'
-          : 'bg-[linear-gradient(to_right,#C2C2C2_1px,transparent_1px),linear-gradient(to_bottom,#C2C2C2_1px,transparent_1px)]'}`}></div>
+        <div className={`fixed inset-0 bg-[size:40px_40px] ${isDark ? 'bg-[linear-gradient(to_right,#181818_1px,transparent_1px),linear-gradient(to_bottom,#181818_1px,transparent_1px)]'
+          : 'bg-[linear-gradient(to_right,#E1E1E1_1px,transparent_1px),linear-gradient(to_bottom,#E1E1E1_1px,transparent_1px)]'}`}></div>
 
         {/* Interactive Bright Grid */}
         <div
@@ -138,17 +136,7 @@ function MainApp() {
               <MagneticButton><a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className={`relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:transition-all after:duration-300 after:bg-current ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}>contact</a></MagneticButton>
               <MagneticButton>
                 <button
-                  onClick={toggleSound}
-                  className={`transition-colors cursor-pointer ${isDark ? 'hover:text-blue-300 text-slate-400 hover:text-white' : 'hover:text-blue-600 text-slate-500 hover:text-slate-900'}`}
-                  aria-label="Toggle sound"
-                  title={isSoundEnabled ? "Disable UI Sounds" : "Enable UI Sounds"}
-                >
-                  {isSoundEnabled ? <Volume2 size={20} strokeWidth={2} /> : <VolumeX size={20} strokeWidth={2} />}
-                </button>
-              </MagneticButton>
-              <MagneticButton>
-                <button
-                  onClick={() => { setIsDark(!isDark); playPop(); }}
+                  onClick={() => setIsDark(!isDark)}
                   className={`ml-2 transition-colors cursor-pointer ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}
                   aria-label="Toggle theme"
                 >
@@ -206,9 +194,7 @@ function MainApp() {
 export default function App() {
   return (
     <Router>
-      <SoundProvider>
-        <MainApp />
-      </SoundProvider>
+      <MainApp />
     </Router>
   );
 }

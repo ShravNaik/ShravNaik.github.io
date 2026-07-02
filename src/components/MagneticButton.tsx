@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useSpring } from 'framer-motion';
-import { useSound } from '../context/SoundContext';
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -16,7 +15,6 @@ export default function MagneticButton({
   pull = 0.6
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { playClick } = useSound();
 
   // Physically accurate, smooth spring configuration
   const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
@@ -64,7 +62,6 @@ export default function MagneticButton({
     <motion.div
       ref={ref}
       style={{ x, y }}
-      onMouseEnter={() => playClick()}
       className={`relative inline-flex justify-center items-center ${className}`}
     >
       {children}

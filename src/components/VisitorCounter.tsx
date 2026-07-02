@@ -14,7 +14,7 @@ export default function VisitorCounter({ isDark }: { isDark: boolean }) {
     // Fetch visit count using CountAPI
     const fetchVisitCount = async () => {
       try {
-        const response = await fetch('https://countapi.mileshilliard.com/api/v1/hit/shravnaik_portfolio_visits');
+        const response = await fetch('https://countapi.mileshilliard.com/api/v1/hit/shravnaik_portfolio_visits_v2');
         const data = await response.json();
         setCount(Number(data.value));
       } catch (error) {

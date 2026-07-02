@@ -34,7 +34,7 @@ const EducationCard = ({ icon: Icon, category, title, description, isDark }: Edu
   return (
     <div
       onMouseMove={handleMouseMove}
-      className={`group relative flex flex-col md:items-center md:text-center p-8 rounded-3xl border transition-all duration-300 overflow-hidden ${isDark ? 'bg-[#101010] border-white/10 hover:border-blue-500/50 shadow-xl' : 'bg-white/80 backdrop-blur-md border-slate-200 hover:border-blue-400 hover:shadow-xl'
+      className={`group relative flex flex-col md:items-center md:text-center p-8 rounded-3xl border transition-all duration-300 overflow-hidden ${isDark ? 'bg-[#101010] border-white/10 hover:border-blue-500/50 shadow-xl' : 'bg-white border-slate-200 hover:border-blue-400 hover:shadow-xl'
         }`}
     >
       {/* Spotlight overlay following mouse */}
@@ -46,7 +46,7 @@ const EducationCard = ({ icon: Icon, category, title, description, isDark }: Edu
         }`}>
         <Icon size={32} />
       </div>
-      <span className={`text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-4 relative z-20 ${isDark ? 'bg-[#00d2ff]/10 text-[#00d2ff] border border-[#00d2ff]/20' : 'bg-blue-50 text-blue-600 border border-blue-100'
+      <span className={`w-fit text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-4 relative z-20 ${isDark ? 'bg-[#00d2ff]/10 text-[#00d2ff] border border-[#00d2ff]/20' : 'bg-blue-50 text-blue-600 border border-blue-100'
         }`}>
         {category}
       </span>
@@ -81,7 +81,7 @@ const TechCard = ({ title, technologies, isDark }: TechCardProps) => {
   return (
     <div
       onMouseMove={handleMouseMove}
-      className={`group relative p-6 rounded-2xl border backdrop-blur-md transition-all duration-300 overflow-hidden ${isDark ? 'glass-card-details border-white/10 hover:border-blue-500/50 shadow-lg' : 'bg-white/80 border-slate-200 hover:border-blue-400 shadow-sm hover:shadow-md'
+      className={`group relative p-6 rounded-2xl border backdrop-blur-md transition-all duration-300 overflow-hidden ${isDark ? 'glass-card-details border-white/10 hover:border-blue-500/50 shadow-lg' : 'bg-white border-slate-200 hover:border-blue-400 shadow-sm hover:shadow-md'
         }`}
     >
       {/* Spotlight overlay following mouse */}
@@ -123,17 +123,17 @@ export default function Home({ isDark }: HomeProps) {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus('submitting');
-    
+
     const formData = new FormData(e.currentTarget);
-    
+
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         setFormStatus('success');
       } else {
@@ -285,10 +285,10 @@ export default function Home({ isDark }: HomeProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 relative z-10">
             <EducationCard
-              icon={School}
-              category="Secondary Education"
-              title="Murgaon High School"
-              description="Foundation in general academics, mathematics, and core sciences."
+              icon={GraduationCap}
+              category="College"
+              title="Padre Conceicao College of Engineering"
+              description="Pursuing higher education in computer science, data science, and mathematics."
               isDark={isDark}
             />
             <EducationCard
@@ -299,12 +299,13 @@ export default function Home({ isDark }: HomeProps) {
               isDark={isDark}
             />
             <EducationCard
-              icon={GraduationCap}
-              category="College"
-              title="Padre Conceicao College of Engineering"
-              description="Pursuing higher education in computer science, data science, and mathematics."
+              icon={School}
+              category="Secondary Education"
+              title="Murgaon High School"
+              description="Foundation in general academics, mathematics, and core sciences."
               isDark={isDark}
             />
+
           </div>
         </div>
       </motion.div>
@@ -315,7 +316,7 @@ export default function Home({ isDark }: HomeProps) {
 
         <div
           onMouseMove={handleContactMouseMove}
-          className={`group relative p-8 md:p-12 rounded-3xl border transition-all duration-300 overflow-hidden ${isDark ? 'bg-[#101010] border-white/10 hover:border-blue-500/50 shadow-2xl' : 'bg-white/60 border-slate-200 hover:border-blue-400 backdrop-blur-md shadow-xl'} max-w-3xl mx-auto`}
+          className={`group relative p-8 md:p-12 rounded-3xl border transition-all duration-300 overflow-hidden ${isDark ? 'bg-[#101010] border-white/10 hover:border-blue-500/50 shadow-2xl' : 'bg-white border-slate-200 hover:border-blue-400 backdrop-blur-md shadow-xl'} max-w-3xl mx-auto`}
         >
           {/* Spotlight overlay following mouse */}
           <motion.div
@@ -324,7 +325,7 @@ export default function Home({ isDark }: HomeProps) {
           ></motion.div>
 
           {formStatus === 'success' ? (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
@@ -337,9 +338,9 @@ export default function Home({ isDark }: HomeProps) {
               </div>
               <h4 className={`text-2xl font-bold mb-3 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Message Sent Successfully!</h4>
               <p className={`text-lg mb-8 max-w-md ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Thanks for reaching out! I've received your message and will get back to you soon.</p>
-              
+
               <MagneticButton>
-                <button 
+                <button
                   onClick={() => setFormStatus('idle')}
                   className={`px-8 py-3 rounded-xl font-bold transition-all shadow-lg ${isDark ? 'bg-white/10 hover:bg-white/20 text-white shadow-white/5' : 'bg-slate-100 hover:bg-slate-200 text-slate-900 shadow-slate-200/50'}`}
                 >
@@ -368,14 +369,13 @@ export default function Home({ isDark }: HomeProps) {
               </div>
 
               <MagneticButton className="w-full md:w-auto md:ml-auto mt-4" proximity={90} pull={0.4}>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={formStatus === 'submitting'}
-                  className={`w-full px-8 py-4 rounded-xl font-bold flex items-center justify-center transition-all ${
-                    formStatus === 'submitting'
-                      ? (isDark ? 'bg-blue-800/50 text-white/50 cursor-not-allowed' : 'bg-blue-300 text-white/80 cursor-not-allowed')
-                      : (isDark ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]' : 'bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30')
-                  }`}
+                  className={`w-full px-8 py-4 rounded-xl font-bold flex items-center justify-center transition-all ${formStatus === 'submitting'
+                    ? (isDark ? 'bg-blue-800/50 text-white/50 cursor-not-allowed' : 'bg-blue-300 text-white/80 cursor-not-allowed')
+                    : (isDark ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]' : 'bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30')
+                    }`}
                 >
                   <span>{formStatus === 'submitting' ? 'Sending...' : 'Send Message'}</span>
                 </button>
@@ -395,7 +395,7 @@ export default function Home({ isDark }: HomeProps) {
         <div className="flex flex-col gap-12 max-w-3xl mx-auto px-4 md:px-0">
 
           {/* Decryption Puzzle */}
-          <div className={`p-8 rounded-3xl border transition-all duration-300 ${isDark ? 'bg-[#101010] border-white/10 hover:border-blue-500/50 shadow-xl' : 'bg-blue-50/50 border-blue-200 hover:border-blue-400 shadow-lg'} backdrop-blur-md flex flex-col md:flex-row items-center gap-6 md:gap-8`}>
+          <div className={`p-8 rounded-3xl border transition-all duration-300 ${isDark ? 'bg-[#101010] border-white/10 hover:border-blue-500/50 shadow-xl' : 'bg-blue-50 border-blue-200 hover:border-blue-400 shadow-lg'} backdrop-blur-md flex flex-col md:flex-row items-center gap-6 md:gap-8`}>
             <div className={`w-16 h-16 rounded-2xl flex-shrink-0 flex items-center justify-center border shadow-xl ${isDark ? 'bg-[#063b53] border-[#0a749d] text-[#00d2ff]' : 'bg-blue-100 border-blue-200 text-blue-600'}`}>
               <Terminal size={32} />
             </div>

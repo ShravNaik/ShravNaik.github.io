@@ -25,10 +25,10 @@ export const projects: Project[] = [
     imageUrl: "/BlueCue/BlueCueBanner.png",
     videoUrl: "/BlueCue/BlueCueAnimation.mp4",
     gallery: [
-      "/BlueCue/BlueCueOnboarding.png",
-      "/BlueCue/BlueCueSignUpHandling.png",
-      "/BlueCue/BlueCueHomeScreen.png",
-      "/BlueCue/BlueCueChats.png"
+      "/BlueCue/BlueCueOnboarding.webp",
+      "/BlueCue/BlueCueSignUpHandling.webp",
+      "/BlueCue/BlueCueHomeScreen.webp",
+      "/BlueCue/BlueCueChats.webp"
     ],
     tags: ['Expo', 'React Native', 'Clerk', 'Supabase'],
     Role: "Full-Stack Developer",
@@ -47,13 +47,13 @@ export const projects: Project[] = [
       "- APScheduler → schedules reminders (one-time and recurring)\n" +
       "- SQLite → local database for storing tasks (easy to use, file-based)\n" +
       "- dotenv → loads environment variables securely (Twilio credentials, etc.)\n",
-    imageUrl: "/Mnemo/MnemoBanner_1x.webp",
+    imageUrl: "/Mnemo/MnemoBanner.webp",
     gallery: [
-      "/Mnemo/MnemoAddCommand.png",
-      "/Mnemo/MnemoDoneCommand.png",
-      "/Mnemo/MnemoEditCommand.png",
-      "/Mnemo/MnemoDeleteCommand.png",
-      "/Mnemo/MnemoReminder.png"
+      "/Mnemo/MnemoAddCommand.webp",
+      "/Mnemo/MnemoDoneCommand.webp",
+      "/Mnemo/MnemoEditCommand.webp",
+      "/Mnemo/MnemoDeleteCommand.webp",
+      "/Mnemo/MnemoReminder.webp"
     ],
     tags: ['Python', 'Flask', 'SQLite'],
     Role: 'Full-Stack Developer',
