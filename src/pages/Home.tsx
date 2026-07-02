@@ -1,4 +1,4 @@
-//import React from 'react';
+import React, { useState } from 'react';
 import { motion, useMotionValue, useMotionTemplate, type Variants } from 'framer-motion';
 import { FileText, School, BookOpen, GraduationCap, Terminal, type LucideIcon } from 'lucide-react';
 import MagneticButton from '../components/MagneticButton';
@@ -118,24 +118,52 @@ export default function Home({ isDark }: HomeProps) {
 
   const contactBg = useMotionTemplate`radial-gradient(circle 300px at ${contactMouseX}px ${contactMouseY}px, ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(57,132,255,0.1)'}, transparent)`;
 
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+    
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setFormStatus('success');
+      } else {
+        console.error("Form error:", data);
+        setFormStatus('error');
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setFormStatus('error');
+    }
+  };
+
   return (
     <main>
       <motion.div className="mb-10" variants={fadeInUp}>
-        <h2 className={`text-2xl mb-2 font-bold ${isDark ? 'text-[#ffffff]' : 'text-slate-900'}`}>hello there, i'm</h2>
+        <h2 className={`text-xl md:text-2xl mb-2 font-bold ${isDark ? 'text-[#ffffff]' : 'text-slate-900'}`}>hello there, i'm</h2>
         <div className="flex items-center gap-6 mb-8 flex-wrap">
-          <h1 className="text-[5.5rem] font-bold tracking-tight leading-none">Shravan Naik</h1>
+          <h1 className="text-5xl sm:text-6xl md:text-[5.5rem] font-bold tracking-tight leading-none">Shravan Naik</h1>
           <div className={`flex items-center gap-2 rounded-full px-4 py-1.5 mt-2 transition-colors ${isDark ? 'bg-[#063b53] border border-[#0a749d]' : 'bg-blue-100 border border-blue-200'}`}>
             <div className={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-[#00d2ff]' : 'bg-blue-500'}`}></div>
             <span className={`text-lg ${isDark ? 'text-[#bae6fd]' : 'text-blue-700'}`}>learning</span>
           </div>
         </div>
-        <p className={`text-[1.35rem] transition-colors ${isDark ? 'text-[#d1d5db]' : 'text-slate-600'}`}>
+        <p className={`text-xl md:text-[1.35rem] transition-colors ${isDark ? 'text-[#d1d5db]' : 'text-slate-600'}`}>
           currently learning <strong className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>python, mathematics, data science, and machine learning.</strong>
         </p>
       </motion.div>
 
       {/* Social Links */}
-      <motion.div className="flex items-center gap-14 ml-10" variants={fadeInUp}>
+      <motion.div className="flex flex-wrap items-center justify-center sm:justify-start gap-8 md:gap-14 ml-0 sm:ml-4 md:ml-10 mt-8 md:mt-0" variants={fadeInUp}>
         <MagneticButton proximity={50} pull={0.4}>
           <a href="https://github.com/ShravNaik" target="_blank" rel="noopener noreferrer" className={`flex flex-col items-center gap-3 transition-opacity hover:opacity-70 ${isDark ? 'text-white' : 'text-slate-800'}`}>
             <svg viewBox="0 0 24 24" aria-hidden="true" width="36" height="36" fill="currentColor">
@@ -172,7 +200,7 @@ export default function Home({ isDark }: HomeProps) {
       <motion.div variants={fadeInUp} className="mt-16 scroll-mt-16" id="about">
         <h3 className="text-[1.7rem] font-bold tracking-tight mb-6">about me.</h3>
         <div className={`ml-4 md:ml-10 border-l-3 ${isDark ? 'border-[#00d2ff]' : 'border-blue-500/40'} pl-6 py-1`}>
-          <p className={`text-[1.15rem] leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+          <p className={`text-base md:text-[1.15rem] leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
             I'm a passionate developer and tech enthusiast with a deep curiosity for how things work under the hood.
             My journey in technology is driven by a love for solving complex problems and building
             innovative, scalable solutions. Whether it's crafting beautiful, dynamic user interfaces or diving deep
@@ -253,7 +281,7 @@ export default function Home({ isDark }: HomeProps) {
           <div className={`absolute top-[50%] left-[40px] right-[40px] hidden md:block h-[5px] ${isDark ? 'bg-blue-500/50' : 'bg-gradient-to-r from-blue-200 via-blue-400 to-blue-200'}`}></div>
 
           {/* Connecting Line for mobile */}
-          <div className={`absolute top-[50%] bottom-[40px] left-[28px] md:hidden w-[2px] ${isDark ? 'bg-gradient-to-b from-blue-500/20 via-[#00d2ff]/60 to-blue-500/20 shadow-[0_0_10px_#00d2ff]' : 'bg-gradient-to-b from-blue-200 via-blue-400 to-blue-200'}`}></div>
+          <div className={`absolute top-[10%] bottom-[40px] left-[40px] md:hidden w-[5px] ${isDark ? 'bg-blue-500/50' : 'bg-gradient-to-b from-blue-200 via-blue-400 to-blue-200'}`}></div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 relative z-10">
             <EducationCard
@@ -295,30 +323,68 @@ export default function Home({ isDark }: HomeProps) {
             style={{ background: contactBg }}
           ></motion.div>
 
-          <form action="https://send.pageclip.co/AVRpwFiprynzGayTU5N1riNxpo3VwvM6/contact-form" className="pageclip-form flex flex-col gap-6 relative z-20" method="post">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="name" className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Name</label>
-                <input type="text" name="name" id="name" required className={`px-4 py-3 rounded-xl outline-none border focus:ring-2 focus:ring-blue-500 transition-all ${isDark ? 'bg-[#0f172a]/50 border-white/10 text-white placeholder-slate-500' : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'}`} placeholder="John Doe" />
+          {formStatus === 'success' ? (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="flex flex-col items-center justify-center py-12 text-center relative z-20"
+            >
+              <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 shadow-xl ${isDark ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-emerald-100 text-emerald-600 border border-emerald-200'}`}>
+                <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h4 className={`text-2xl font-bold mb-3 tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Message Sent Successfully!</h4>
+              <p className={`text-lg mb-8 max-w-md ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Thanks for reaching out! I've received your message and will get back to you soon.</p>
+              
+              <MagneticButton>
+                <button 
+                  onClick={() => setFormStatus('idle')}
+                  className={`px-8 py-3 rounded-xl font-bold transition-all shadow-lg ${isDark ? 'bg-white/10 hover:bg-white/20 text-white shadow-white/5' : 'bg-slate-100 hover:bg-slate-200 text-slate-900 shadow-slate-200/50'}`}
+                >
+                  Send Another Message
+                </button>
+              </MagneticButton>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleFormSubmit} className="flex flex-col gap-6 relative z-20">
+              <input type="hidden" name="access_key" value="f54c81a8-8757-4aba-84d5-eb5f1c297176" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="name" className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Name</label>
+                  <input type="text" name="name" id="name" required className={`px-4 py-3 rounded-xl outline-none border focus:ring-2 focus:ring-blue-500 transition-all ${isDark ? 'bg-[#0f172a]/50 border-white/10 text-white placeholder-slate-500' : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'}`} placeholder="John Doe" />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="email" className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Email</label>
+                  <input type="email" name="email" id="email" required className={`px-4 py-3 rounded-xl outline-none border focus:ring-2 focus:ring-blue-500 transition-all ${isDark ? 'bg-[#0f172a]/50 border-white/10 text-white placeholder-slate-500' : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'}`} placeholder="john@example.com" />
+                </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="email" className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Email</label>
-                <input type="email" name="email" id="email" required className={`px-4 py-3 rounded-xl outline-none border focus:ring-2 focus:ring-blue-500 transition-all ${isDark ? 'bg-[#0f172a]/50 border-white/10 text-white placeholder-slate-500' : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'}`} placeholder="john@example.com" />
+                <label htmlFor="message" className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Message</label>
+                <textarea name="message" id="message" required rows={5} className={`px-4 py-3 rounded-xl outline-none border focus:ring-2 focus:ring-blue-500 transition-all resize-none ${isDark ? 'bg-[#0f172a]/50 border-white/10 text-white placeholder-slate-500' : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'}`} placeholder="Hi, I'd like to talk about..."></textarea>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="message" className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Message</label>
-              <textarea name="message" id="message" required rows={5} className={`px-4 py-3 rounded-xl outline-none border focus:ring-2 focus:ring-blue-500 transition-all resize-none ${isDark ? 'bg-[#0f172a]/50 border-white/10 text-white placeholder-slate-500' : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'}`} placeholder="Hi, I'd like to talk about..."></textarea>
-            </div>
-
-            <MagneticButton className="w-full md:w-auto md:ml-auto mt-4" proximity={90} pull={0.4}>
-              <button type="submit" className={`pageclip-form__submit w-full px-8 py-4 rounded-xl font-bold flex items-center justify-center transition-all ${isDark ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]' : 'bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30'}`}>
-                <span>Send Message</span>
-              </button>
-            </MagneticButton>
-          </form>
+              <MagneticButton className="w-full md:w-auto md:ml-auto mt-4" proximity={90} pull={0.4}>
+                <button 
+                  type="submit" 
+                  disabled={formStatus === 'submitting'}
+                  className={`w-full px-8 py-4 rounded-xl font-bold flex items-center justify-center transition-all ${
+                    formStatus === 'submitting'
+                      ? (isDark ? 'bg-blue-800/50 text-white/50 cursor-not-allowed' : 'bg-blue-300 text-white/80 cursor-not-allowed')
+                      : (isDark ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]' : 'bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30')
+                  }`}
+                >
+                  <span>{formStatus === 'submitting' ? 'Sending...' : 'Send Message'}</span>
+                </button>
+              </MagneticButton>
+              {formStatus === 'error' && (
+                <p className="text-red-500 text-sm text-center font-medium mt-2">Oops! Something went wrong. Please try again.</p>
+              )}
+            </form>
+          )}
         </div>
       </motion.div>
 

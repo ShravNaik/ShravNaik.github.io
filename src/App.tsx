@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Moon, Sun, ArrowUp, Volume2, VolumeX } from 'lucide-react';
 import MagneticButton from './components/MagneticButton';
 import VisitorCounter from './components/VisitorCounter';
@@ -32,6 +32,26 @@ function MainApp() {
   const [isDark, setIsDark] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 50 && !isScrolled) {
@@ -48,7 +68,7 @@ function MainApp() {
   };
 
   return (
-    <Router>
+    <>
       <div
         onMouseMove={handleMouseMove}
         className={`min-h-screen relative overflow-hidden font-sans transition-colors duration-300 ${isDark ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'}`}
@@ -87,7 +107,7 @@ function MainApp() {
         <div className={`absolute bottom-[30%] left-[-200px] w-[500px] h-[500px] rounded-full blur-[200px] pointer-events-none transition-colors duration-500 ${isDark ? 'bg-[#004B71] opacity-90' : 'bg-[#042A5C] opacity-30 mix-blend-screen'}`}></div>
 
         <motion.div
-          className="relative z-10 max-w-5xl mx-auto px-8 py-12"
+          className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
@@ -97,7 +117,7 @@ function MainApp() {
             className="flex justify-between items-center mb-26 sticky top-4 z-50 backdrop-blur-sm py-4 -my-4"
             variants={fadeInUp}
           >
-            <Link to="/" className="text-3xl font-bold tracking-tight flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <Link to="/" className="text-2xl md:text-3xl font-bold tracking-tight flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <span>S</span>
               <motion.span
                 initial={false}
@@ -112,10 +132,10 @@ function MainApp() {
               </motion.span>
               <span>N.</span>
             </Link>
-            <nav className={`flex items-center gap-8 text-[1.5rem] font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              <MagneticButton><a href="/#projects" className={`relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:transition-all after:duration-300 after:bg-current ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}>projects</a></MagneticButton>
-              <MagneticButton><a href="/#blogs" className={`relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:transition-all after:duration-300 after:bg-current ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}>blogs</a></MagneticButton>
-              <MagneticButton><a href="/#contact" className={`relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:transition-all after:duration-300 after:bg-current ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}>contact</a></MagneticButton>
+            <nav className={`flex items-center gap-3 sm:gap-4 md:gap-8 text-sm sm:text-base md:text-[1.5rem] font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <MagneticButton><a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className={`relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:transition-all after:duration-300 after:bg-current ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}>projects</a></MagneticButton>
+              <MagneticButton><a href="#blogs" onClick={(e) => handleNavClick(e, 'blogs')} className={`relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:transition-all after:duration-300 after:bg-current ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}>blogs</a></MagneticButton>
+              <MagneticButton><a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className={`relative transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:transition-all after:duration-300 after:bg-current ${isDark ? 'hover:text-blue-300' : 'hover:text-blue-600'}`}>contact</a></MagneticButton>
               <MagneticButton>
                 <button
                   onClick={toggleSound}
@@ -159,7 +179,7 @@ function MainApp() {
               <a href="#" target="_blank" rel="noopener noreferrer" className={`hover:${isDark ? 'text-white' : 'text-slate-900'} transition-colors`}>
                 LinkedIn
               </a>
-              <a href="/#contact" className={`hover:${isDark ? 'text-white' : 'text-slate-900'} transition-colors`}>
+              <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className={`hover:${isDark ? 'text-white' : 'text-slate-900'} transition-colors`}>
                 Contact
               </a>
               <MagneticButton>
@@ -179,14 +199,16 @@ function MainApp() {
           </footer>
         </motion.div>
       </div>
-    </Router>
+    </>
   );
 }
 
 export default function App() {
   return (
-    <SoundProvider>
-      <MainApp />
-    </SoundProvider>
+    <Router>
+      <SoundProvider>
+        <MainApp />
+      </SoundProvider>
+    </Router>
   );
 }

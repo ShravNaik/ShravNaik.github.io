@@ -44,10 +44,10 @@ export const projects: Project[] = [
       "\n\n- Python → main programming language\n" +
       "- Flask → lightweight web framework to handle incoming WhatsApp webhook requests\n" +
       "- Twilio API (WhatsApp) → connects Mnemo to WhatsApp, sends and receives messages\n" +
-      "- APScheduler → schedules reminders (one‑time and recurring)\n" +
-      "- SQLite → local database for storing tasks (easy to use, file‑based)\n" +
+      "- APScheduler → schedules reminders (one-time and recurring)\n" +
+      "- SQLite → local database for storing tasks (easy to use, file-based)\n" +
       "- dotenv → loads environment variables securely (Twilio credentials, etc.)\n",
-    imageUrl: "/Mnemo/MnemoBanner.png",
+    imageUrl: "/Mnemo/MnemoBanner_1x.webp",
     gallery: [
       "/Mnemo/MnemoAddCommand.png",
       "/Mnemo/MnemoDoneCommand.png",
