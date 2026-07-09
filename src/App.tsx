@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy, useCallback } from 'react';
+import React, { useState, Suspense, lazy, useCallback, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { ReactLenis } from 'lenis/react';
 import { Moon, Sun, ArrowUp } from 'lucide-react';
@@ -27,6 +27,16 @@ const staggerContainer: Variants = {
     }
   }
 };
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function MainApp() {
   const [isDark, setIsDark] = useState(true);
@@ -69,6 +79,7 @@ function MainApp() {
 
   return (
     <>
+      <ScrollToTop />
       <div
         onMouseMove={handleMouseMove}
         className={`min-h-screen relative overflow-hidden font-sans transition-colors duration-300 ${isDark ? 'bg-black text-white' : 'bg-[#F5F5F5] text-slate-900'}`}
