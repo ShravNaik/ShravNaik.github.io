@@ -288,7 +288,7 @@ export default function Home({ isDark }: HomeProps) {
               icon={GraduationCap}
               category="College"
               title="Padre Conceicao College of Engineering"
-              description="Pursuing higher education in computer science, data science, and mathematics."
+              description="Pursuing higher education in information technology and honours in data science."
               isDark={isDark}
             />
             <EducationCard

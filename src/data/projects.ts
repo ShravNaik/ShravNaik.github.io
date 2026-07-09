@@ -18,22 +18,30 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "bluecue",
-    title: "BlueCue: Chat app",
-    description: "Its a chat app designed using expo, react native, clerk for authentication and supabase for database. It features secure login/signup, real-time chat with your friends and family, image sharing, and much more.",
-    longDescription: "BlueCue is a fully-featured, cross-platform mobile chat application built from the ground up to provide a seamless and secure communication experience. Leveraging the power of Expo and React Native, the app delivers native-like performance on both iOS and Android. \n\nAuthentication is securely handled via Clerk, ensuring user data privacy, while Supabase acts as the robust backend database handling real-time WebSocket connections for instant message delivery. Features include image sharing, user presence indicators, typing status, and end-to-end reliability.",
-    imageUrl: "/BlueCue/BlueCueBanner.png",
-    videoUrl: "/BlueCue/BlueCueAnimation.mp4",
+    id: "crypta",
+    title: "Crypta: CLI Password Manager",
+    description: "Crypta is a lightweight, secure, and easy-to-use command-line password manager built in Python.",
+    longDescription: "Crypta is a password manager designed to keep your passwords safe and secure. It encrypts your vault with a master password, enforces lockout protection after repeated failures, and provides utilities for generating strong random passwords.\n\nFeatures:\n" +
+      "- AES-based encryption with a master password\n" +
+      "- Lockout protection after multiple failed attempts\n" +
+      "- Lockout timer of 15 minutes before you can retry\n" +
+      "- Store, retrieve, list, and delete service credentials\n" +
+      "- Random password generator with customizable length\n" +
+      "- Simple CLI interface (crypta add, crypta list, etc.)\n" +
+      "- Data stored securely in an encrypted vault (data/vault.enc)",
+    imageUrl: "/Crypta/CryptaBanner.webp",
     gallery: [
-      "/BlueCue/BlueCueOnboarding.webp",
-      "/BlueCue/BlueCueSignUpHandling.webp",
-      "/BlueCue/BlueCueHomeScreen.webp",
-      "/BlueCue/BlueCueChats.webp"
+      "/Crypta/CryptaHowItWorks.webp",
+      "/Crypta/CryptaAddCommand.webp",
+      "/Crypta/CryptaGetCommand.webp",
+      "/Crypta/CryptaListCommand.webp",
+      "/Crypta/CryptaDeleteCommand.webp",
+      "/Crypta/CryptaGenerateCommand.webp"
     ],
-    tags: ['Expo', 'React Native', 'Clerk', 'Supabase'],
-    Role: "Full-Stack Developer",
-    Timeline: "Oct '25 - Nov '25",
-    githubLink: "https://github.com/ShravNaik/BlueCue/tree/master",
+    tags: ['Python', 'Cryptography library'],
+    Role: 'Backend Developer',
+    Timeline: "July '26",
+    githubLink: "https://github.com/ShravNaik/Crypta-CLI-Password-Manager",
     gridSpan: "md:col-span-2 lg:col-span-2"
   },
   {
@@ -60,5 +68,25 @@ export const projects: Project[] = [
     Timeline: "June '26",
     githubLink: "https://github.com/ShravNaik/mnemo-reminder-bot",
     gridSpan: "md:col-span-1 lg:col-span-1"
+  },
+  {
+    id: "bluecue",
+    title: "BlueCue: Chat app",
+    description: "Its a chat app designed using expo, react native, clerk for authentication and supabase for database. It features secure login/signup, real-time chat with your friends and family, image sharing, and much more.",
+    longDescription: "BlueCue is a fully-featured, cross-platform mobile chat application built from the ground up to provide a seamless and secure communication experience. Leveraging the power of Expo and React Native, the app delivers native-like performance on both iOS and Android. \n\nAuthentication is securely handled via Clerk, ensuring user data privacy, while Supabase acts as the robust backend database handling real-time WebSocket connections for instant message delivery. Features include image sharing, user presence indicators, typing status, and end-to-end reliability.",
+    imageUrl: "/BlueCue/BlueCueBanner.png",
+    videoUrl: "/BlueCue/BlueCueAnimation.mp4",
+    gallery: [
+      "/BlueCue/BlueCueOnboarding.webp",
+      "/BlueCue/BlueCueSignUpHandling.webp",
+      "/BlueCue/BlueCueHomeScreen.webp",
+      "/BlueCue/BlueCueChats.webp"
+    ],
+    tags: ['Expo', 'React Native', 'Clerk', 'Supabase'],
+    Role: "Full-Stack Developer",
+    Timeline: "Oct '25 - Nov '25",
+    githubLink: "https://github.com/ShravNaik/BlueCue/tree/master",
+    gridSpan: "md:col-span-2 lg:col-span-2"
   }
+
 ];

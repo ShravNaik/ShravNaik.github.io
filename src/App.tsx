@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy, useCallback } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
+import { ReactLenis } from 'lenis/react';
 import { Moon, Sun, ArrowUp } from 'lucide-react';
 import MagneticButton from './components/MagneticButton';
 import VisitorCounter from './components/VisitorCounter';
 import { motion, useScroll, useMotionValueEvent, type Variants } from 'framer-motion';
-import Home from './pages/Home';
-import ProjectDetails from './pages/ProjectDetails';
-import BlogDetails from './pages/BlogDetails';
 import ParticleTrail from './components/ParticleTrail';
 import EasterEgg from './components/EasterEgg';
 
+const Home = lazy(() => import('./pages/Home'));
+const ProjectDetails = lazy(() => import('./pages/ProjectDetails'));
+const BlogDetails = lazy(() => import('./pages/BlogDetails'));
+
 const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 100, damping: 20 } }
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 20 } }
 };
 
 const staggerContainer: Variants = {
@@ -33,7 +35,7 @@ function MainApp() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     if (location.pathname !== '/') {
       navigate('/');
@@ -49,7 +51,7 @@ function MainApp() {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  };
+  }, [location.pathname, navigate]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest > 50 && !isScrolled) {
@@ -59,11 +61,11 @@ function MainApp() {
     }
   });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const { currentTarget, clientX, clientY } = e;
     currentTarget.style.setProperty('--mouse-x', `${clientX}px`);
     currentTarget.style.setProperty('--mouse-y', `${clientY}px`);
-  };
+  }, []);
 
   return (
     <>
@@ -146,11 +148,17 @@ function MainApp() {
             </nav>
           </motion.header>
 
-          <Routes>
-            <Route path="/" element={<Home isDark={isDark} />} />
-            <Route path="/project/:id" element={<ProjectDetails isDark={isDark} />} />
-            <Route path="/blog/:id" element={<BlogDetails isDark={isDark} />} />
-          </Routes>
+          <Suspense fallback={
+            <div className="flex items-center justify-center min-h-[50vh]">
+              <div className={`w-8 h-8 rounded-full border-4 border-t-transparent animate-spin ${isDark ? 'border-white' : 'border-blue-500'}`}></div>
+            </div>
+          }>
+            <Routes>
+              <Route path="/" element={<Home isDark={isDark} />} />
+              <Route path="/project/:id" element={<ProjectDetails isDark={isDark} />} />
+              <Route path="/blog/:id" element={<BlogDetails isDark={isDark} />} />
+            </Routes>
+          </Suspense>
 
           {/* Footer */}
           <footer className={`mt-12 py-8 border-t ${isDark ? 'border-white/10 text-slate-400' : 'border-slate-200 text-slate-500'} flex flex-col md:flex-row items-center justify-between text-sm gap-4`}>
@@ -193,8 +201,10 @@ function MainApp() {
 
 export default function App() {
   return (
-    <Router>
-      <MainApp />
-    </Router>
+    <ReactLenis root>
+      <Router>
+        <MainApp />
+      </Router>
+    </ReactLenis>
   );
 }
