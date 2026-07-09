@@ -1,6 +1,6 @@
 import React, { useState, Suspense, lazy, useCallback, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
-import { ReactLenis } from 'lenis/react';
+import { ReactLenis, useLenis } from 'lenis/react';
 import { Moon, Sun, ArrowUp } from 'lucide-react';
 import MagneticButton from './components/MagneticButton';
 import VisitorCounter from './components/VisitorCounter';
@@ -30,10 +30,25 @@ const staggerContainer: Variants = {
 
 function ScrollToTop() {
   const { pathname } = useLocation();
+  const lenis = useLenis();
 
   useEffect(() => {
+    // Attempt to scroll immediately
     window.scrollTo(0, 0);
-  }, [pathname]);
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+
+    // Force scroll after a short delay to account for React Router's transition / rendering cycle
+    const timeoutId = setTimeout(() => {
+      window.scrollTo(0, 0);
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [pathname, lenis]);
 
   return null;
 }
